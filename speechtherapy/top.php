@@ -1,6 +1,12 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <?php
+    $adminStatus = false;
+    $loggedIn = false;
+    $user="username";
+    
+    
     include ('head.php');
     $debug = false;
 
@@ -54,7 +60,5 @@
     $whichPass = "w"; //flag for which one to use.
     $dbName = strtoupper(get_current_user()) . '_speech';
     $thisDatabase = new myDatabase($dbUserName, $whichPass, $dbName);
-    $adminStatus = false;
-    $loggedIn = false;
     include "nav.php";
     ?>
