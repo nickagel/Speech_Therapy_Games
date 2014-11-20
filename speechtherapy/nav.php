@@ -1,7 +1,7 @@
 <nav>
     <ol>
         <?php
-        print "<li>".include('header.php')."</li>";
+        include('header.php');
         if ($path_parts['filename'] == "index") {
             print '<li class="activePage">About</li>';
         } else {

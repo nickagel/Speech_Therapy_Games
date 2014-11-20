@@ -1,3 +1,3 @@
-<header>
-    <img src="logo.png" alt="Logo">
-</header>
+<li><header>
+        <img src="logo/logo.jpg" alt="Logo">
+</header></li>

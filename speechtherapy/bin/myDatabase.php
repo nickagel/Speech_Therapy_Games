@@ -12,7 +12,7 @@ class myDatabase {
     }
 
     function connect($dbUserName,$whichPass,$dbName) {
-        require_once("bin/pass.php");
+        //require_once("bin/pass.php");
 
         $debugMe = false;
 
