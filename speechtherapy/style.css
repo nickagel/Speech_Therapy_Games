@@ -19,20 +19,19 @@ body{
 /************************NAVIGATION/HEADER*************************************/
 /***HEADER***/
 nav img{
-    position:fixed;
-    margin-top:-19px;
-    margin-left:-60px
+   vertical-align: middle;
+   text-align: center;
 }
 /***NAVIGATION***/
-nav{
+nav ol{
     background-color:rgba(0, 0, 0, .15);
-    padding:4px;
     border-bottom:solid thin rgba(0, 0, 0, .15);
     border-top:solid thin rgba(0, 0, 0, .15);
+
 }
 nav li, nav a{
     display:inline;
-    padding: 20px 15px 21px 15px;
+    padding: 15px 15px 18px 15px;
     font-size:20px;
 
 }
@@ -45,9 +44,6 @@ nav a:link, nav a:visited{
 }
 nav li:nth-child(n+2):hover{
     background-color:rgba(0, 0, 0, .15);
-}
-nav img{
-    width:50px;
 }
 /****************************FOOTER********************************************/
 footer{
