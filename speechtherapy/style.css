@@ -6,19 +6,33 @@
 html{
     background-color:#00A6E0;
     padding:0px 16px;
+    margin-left:auto;
+    margin-right:auto;
 }
 body{
-    background-color: rgba(0, 0, 0, .25); 
+    background-color: rgba(0, 0, 0, .25);
+}
+/*************MAIN CONTENT (EXCLUDES FOOTER, HEADER, NAVIGATION)***************/
+.content{
+    padding:0px 16px;
 }
 /************************NAVIGATION/HEADER*************************************/
+/***HEADER***/
+nav img{
+    position:fixed;
+    margin-top:-19px;
+    margin-left:-60px
+}
+/***NAVIGATION***/
 nav{
     background-color:rgba(0, 0, 0, .15);
     padding:4px;
-    border:solid thin rgba(0, 0, 0, .15);
+    border-bottom:solid thin rgba(0, 0, 0, .15);
+    border-top:solid thin rgba(0, 0, 0, .15);
 }
 nav li, nav a{
     display:inline;
-    padding: 20px 20px 21px 20px;
+    padding: 20px 15px 21px 15px;
     font-size:20px;
 
 }
@@ -29,10 +43,16 @@ nav a:link, nav a:visited{
 .activePage{
     font-weight:bold;
 }
-nav li:hover{
+nav li:nth-child(n+2):hover{
     background-color:rgba(0, 0, 0, .15);
 }
-header img{
+nav img{
     width:50px;
-    float: left;
+}
+/****************************FOOTER********************************************/
+footer{
+    padding:8px 16px;
+    background-color:rgba(0, 0, 0, .15);
+    border-top:solid thin rgba(0, 0, 0, .15);
+    border-bottom:solid thin rgba(0, 0, 0, .15);
 }
