@@ -1,7 +1,7 @@
 <nav>
     <ol>
+        <li><a id='header' href='index.php'><img src="logo/logo.jpg"></a></li>
         <?php
-        print "<li>".include('header.php')."</li>";
         if ($path_parts['filename'] == "index") {
             print '<li class="activePage">About</li>';
         } else {
@@ -23,7 +23,7 @@
                 print '<li><a href="students.php">Students</a></li>';
             }
         if ($loggedIn) {
-            print "<li>" . $user . "</li>";
+            print "<li>" . $user . "</li>\n";
             print '<li><A HREF="javascript:history.go(0)">Log Out</A></li>';
         } else {
             if ($path_parts['filename'] == "logIn") {

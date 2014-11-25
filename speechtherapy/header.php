@@ -1,3 +1,6 @@
 <header>
-    <img src="logo.png" alt="Logo">
+    <figure>
+    <img src="logo/logo.jpg" alt="Logo">
+    <figcaption>Speech Therapy</figcaption>
+    </figure>
 </header>
