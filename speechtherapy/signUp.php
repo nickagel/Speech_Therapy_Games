@@ -62,12 +62,14 @@ $yourURL = $domain . $phpSelf;
 // in the order they appear on the form
 $email = "";
 $username = "";
+$password = "";
+$passwordTwo = "";
 $fName = "";
 $lName = "";
-$match =false;
+$match = false;
 $bingo = true;
-$both=false;
-$grade="none";
+$both = false;
+$grade = "none";
 
 //%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
 //
@@ -77,6 +79,8 @@ $grade="none";
 // in the order they appear in section 1c.
 $emailERROR = false;
 $usernameERROR = false;
+$passwordERROR = false;
+$passwordTwoERROR = false;
 $lNameERROR = false;
 $fNameERROR = false;
 $gradeERROR = false;
@@ -116,13 +120,15 @@ if (isset($_POST["btnSubmit"])) {
 
     $email = filter_var($_POST["txtEmail"], FILTER_SANITIZE_EMAIL);
     $username = htmlentities($_POST["txtUsername"], ENT_QUOTES, "UTF-8");
+    $password = htmlentities($_POST["txtPassword"], ENT_QUOTES, "UTF-8");
+    $passwordTwo = htmlentities($_POST["txtPasswordTwo"], ENT_QUOTES, "UTF-8");
     $fName = htmlentities($_POST["txtFName"], ENT_QUOTES, "UTF-8");
     $lName = htmlentities($_POST["txtLName"], ENT_QUOTES, "UTF-8");
-    $bingo = htmlentities($_POST["chkBingo"],ENT_QUOTES,"UTF-8");
-    $match = htmlentities($_POST["chkMatch"],ENT_QUOTES,"UTF-8");
-    $both = htmlentities($_POST["chkBoth"],ENT_QUOTES,"UTF-8");
-    $gender = htmlentities($_POST["radGender"],ENT_QUOTES,"UTF-8");
-    $grade = htmlentities($_POST["lstGrade"],ENT_QUOTES,"UTF-8");
+    $bingo = htmlentities($_POST["chkBingo"], ENT_QUOTES, "UTF-8");
+    $match = htmlentities($_POST["chkMatch"], ENT_QUOTES, "UTF-8");
+    $both = htmlentities($_POST["chkBoth"], ENT_QUOTES, "UTF-8");
+    $gender = htmlentities($_POST["radGender"], ENT_QUOTES, "UTF-8");
+    $grade = htmlentities($_POST["lstGrade"], ENT_QUOTES, "UTF-8");
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
@@ -142,6 +148,17 @@ if (isset($_POST["btnSubmit"])) {
     } elseif (!verifyAlphaNum($username)) {
         $errorMsg[] = "Your last name address appears to be incorrect.";
         $usernameERROR = true;
+    }
+    if ($password == "") {
+        $errorMsg[] = "Please enter password";
+        $passwordERROR = true;
+    } elseif (!verifyAlphaNum($username)) {
+        $errorMsg[] = "Your password appears to be incorrect.";
+        $passwordERROR = true;
+    }
+    if ($passwordTwo != $password) {
+        $errorMsg[] = "Passwords don't match. Please enter a valid password";
+        $passwordTwoERROR = true;
     }
     if ($fName == "") {
         $errorMsg[] = "Please enter first name";
@@ -164,28 +181,28 @@ if (isset($_POST["btnSubmit"])) {
         $errorMsg[] = "Your email address appears to be incorrect.";
         $emailERROR = true;
     }
-    
-    if(isset($_POST["chkBingo"])) {
-        $bingo  = true;
-    }else{
-        $bingo  = false;
+
+    if (isset($_POST["chkBingo"])) {
+        $bingo = true;
+    } else {
+        $bingo = false;
     }
 
-    if(isset($_POST["chkMatch"])) {
-        $match  = true;
-    }else{
-        $match  = false;
+    if (isset($_POST["chkMatch"])) {
+        $match = true;
+    } else {
+        $match = false;
     }
-    if(isset($_POST["chkBoth"])){
-        $both=true;
-    }else{
-        $both=false;
+    if (isset($_POST["chkBoth"])) {
+        $both = true;
+    } else {
+        $both = false;
     }
-    
-    if($grade=="NONE"){
-        $errorMsg[]="Please select a valid grade level";
-        $gradeERROR=true;
-    } 
+
+    if ($grade == "NONE") {
+        $errorMsg[] = "Please select a valid grade level";
+        $gradeERROR = true;
+    }
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // SECTION: 2d Process Form - Passed Validation
@@ -344,93 +361,107 @@ if (isset($_POST["btnSubmit"])) {
               method="post"
               id="frmRegister">
             <fieldset class="wrapper">
-                <legend>Register Today</legend>
-                <p>You will find Peace ...</p>
+                <legend>Sign up</legend>
                 <fieldset class="wrapperTwo">
-                    <legend>Please complete the following form</legend>
                     <fieldset class="contact">
                         <legend>Contact Information</legend>
-
-                        <label for="txtEmail" class="required">Email
-                            <input type="text" id="txtEmail" name="txtEmail"
-                                   value="<?php print $email; ?>"
-                                   maxlength="45" placeholder="Enter a valid email address"
-                                   <?php if ($emailERROR) print 'class="mistake"'; ?>
-                                   onfocus="this.select()" 
-                                   autofocus>
-                        </label>
-                        <label for="txtUsername" class="required">Username
-                            <input type="text" id="txtUsername" name="txtUsername"
-                                   value="<?php print $username; ?>"
-                                   maxlength="45" placeholder="Enter a valid username address"
-                                   <?php if ($usernameERROR) print 'class="mistake"'; ?>
-                                   onfocus="this.select()" 
-                                   autofocus>
-                        </label>
-                        <label for="txtFName" class="required">First Name
-                            <input type="text" id="txtFName" name="txtFName"
-                                   value="<?php print $fName; ?>"
-                                   maxlength="45" placeholder="Enter a valid First name"
-                                   <?php if ($fNameERROR) print 'class="mistake"'; ?>
-                                   onfocus="this.select()" 
-                                   autofocus>
-                        </label>
-                        <label for="txtLName" class="required">Last Name
-                            <input type="text" id="txtLName" name="txtLName"
-                                   value="<?php print $lName; ?>"
-                                   maxlength="45" placeholder="Enter a valid Last name"
-                                   <?php if ($lNameERROR) print 'class="mistake"'; ?>
-                                   onfocus="this.select()" 
-                                   autofocus>
-                        </label>
+                        <div class="border">
+                            <label for="txtUsername" class="required">Username<strong class="mistake">*</strong>
+                                <input type="text" id="txtUsername" name="txtUsername"
+                                       value="<?php print $username; ?>"
+                                       maxlength="45" placeholder="Enter a valid username address"
+                                       <?php if ($usernameERROR) print 'class="mistake"'; ?>
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                            <label for="txtPassword" class="required">Password<strong class="mistake">*</strong>
+                                <input type="password" id="txtPassword" name="txtPassword"
+                                       value="<?php print $password; ?>"
+                                       maxlength="45" placeholder="Enter a valid username address"
+                                       <?php if ($passwordERROR) print 'class="mistake"'; ?>
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                            <label for="txtPasswordTwo" class="required">Re-enter Password<strong class="mistake">*</strong>
+                                <input type="password" id="txtPasswordTwo" name="txtPasswordTwo"
+                                       value="<?php print $passwordTwo; ?>"
+                                       maxlength="45" placeholder="RE-Enter a valid password "
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                            <label for="txtEmail" class="required">Email<strong class="mistake">*</strong>
+                                <input type="text" id="txtEmail" name="txtEmail"
+                                       value="<?php print $email; ?>"
+                                       maxlength="45" placeholder="Enter a valid email address"
+                                       <?php if ($emailERROR) print 'class="mistake"'; ?>
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                            <label for="txtFName" class="required">First Name<strong class="mistake">*</strong>
+                                <input type="text" id="txtFName" name="txtFName"
+                                       value="<?php print $fName; ?>"
+                                       maxlength="45" placeholder="Enter a valid First name"
+                                       <?php if ($fNameERROR) print 'class="mistake"'; ?>
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                            <label for="txtLName" class="required">Last Name<strong class="mistake">*</strong>
+                                <input type="text" id="txtLName" name="txtLName"
+                                       value="<?php print $lName; ?>"
+                                       maxlength="45" placeholder="Enter a valid Last name"
+                                       <?php if ($lNameERROR) print 'class="mistake"'; ?>
+                                       onfocus="this.select()" 
+                                       autofocus>
+                            </label>
+                        </div>
                     </fieldset> <!-- ends contact -->
                     <fieldset>
-                        <label for="lstGrade" >Grade
-                            <select <?php if ($gradeERROR) print 'class="mistake"'; ?>
-                                id="lstGrade"
+                        <legend>Grade<strong class="mistake">*</strong></legend>
+                        <div class="border">
+                            <label for="lstGrade" >
+                                <select <?php if ($gradeERROR) print 'class="mistake"'; ?>
+                                    id="lstGrade"
                                     name="lstGrade"
                                     tabindex="600" onfocus="this.select()" autofocus >
-                                <option value="NONE"> - </option>
-                                <option value="KIND">Kindergarten</option>
-                                <option value="FIRST">1st</option>
-                                <option value="SECOND">2nd</option>
-                                <option value="THIRD">3rd</option>
-                                <option value="FOURTH">4th</option>
-                                <option value="FIFTH">5th</option>
-                                <option value="SIXTH">6th</option>
-                            </select></label>
+                                    <option value="NONE"> - </option>
+                                    <option value="KIND">Kindergarten</option>
+                                    <option value="FIRST">1st</option>
+                                    <option value="SECOND">2nd</option>
+                                    <option value="THIRD">3rd</option>
+                                    <option value="FOURTH">4th</option>
+                                    <option value="FIFTH">5th</option>
+                                    <option value="SIXTH">6th</option>
+                                </select></label>
+                        </div>
                     </fieldset> 
-                    <fieldset>
-                        <fieldset class="radio">
-                            <legend>What is your gender?</legend>
-                            <div id="radio">
-                                <label><input type="radio" id="radGenderMale" name="radGender" value="Male" tabindex="231"
-                                              checked="checked" >Male</label>
+                    <fieldset class="radio">
+                        <legend>What is your gender?</legend>
+                        <div class="border">
+                            <label><input type="radio" id="radGenderMale" name="radGender" value="Male" tabindex="231"
+                                          checked="checked" >Male</label>
 
-                                <label><input type="radio" id="radGenderFemale" name="radGender" value="Female" tabindex="233"
-                                              >Female</label>
-                                <label><input type="radio" id="radGenderOther" name="radGender" value="Other" tabindex="233"
-                                              >Other</label>
-                            </div>
-                        </fieldset>
-                        <fieldset class="checkbox">
-                            <legend>Favorite Game:</legend>
-                            <div id="checkbox">
-                                <label><input type="checkbox" id="chkBingo" name="chkBingo" value="Bingo" tabindex="221"
-                                              checked="checked">Bingo</label>
+                            <label><input type="radio" id="radGenderFemale" name="radGender" value="Female" tabindex="233"
+                                          >Female</label>
+                            <label><input type="radio" id="radGenderOther" name="radGender" value="Other" tabindex="233"
+                                          >Other</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="checkbox">
+                        <legend>Favorite Game:</legend>
+                        <div class="border">
+                            <label><input type="checkbox" id="chkBingo" name="chkBingo" value="Bingo" tabindex="221"
+                                          checked="checked">Bingo</label>
 
-                                <label><input type="checkbox" id="chkMatch" name="chkMatch" value="Match" tabindex="223"
-                                              >Match</label>
-                                <label><input type="checkbox" id="chkBoth" name="chkBoth" value="Both" tabindex="223"
-                                              >Both</label>
-                            </div>
-                        </fieldset>
-                        
+                            <label><input type="checkbox" id="chkMatch" name="chkMatch" value="Match" tabindex="223"
+                                          >Match</label>
+                            <label><input type="checkbox" id="chkBoth" name="chkBoth" value="Both" tabindex="223"
+                                          >Both</label>
+                        </div>
                     </fieldset>
                 </fieldset><!-- ends wrapper Two -->
                 <fieldset class="buttons">
                     <legend></legend>
-                    <input type="submit" id="btnSubmit" name="btnSubmit" value="Register" tabindex="900" class="button">
+                    <input type="submit" id="btnSubmit" name="btnSubmit" value="Sign up" tabindex="900" class="button">
                 </fieldset> <!-- ends buttons -->
             </fieldset> <!-- Ends Wrapper -->
         </form>

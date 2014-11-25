@@ -14,7 +14,7 @@ body{
 }
 /*************MAIN CONTENT (EXCLUDES FOOTER, HEADER, NAVIGATION)***************/
 .content{
-    padding:0px 16px;
+    padding:16px;
 }
 /************************NAVIGATION/HEADER*************************************/
 /***HEADER***/
@@ -51,4 +51,62 @@ footer{
     background-color:rgba(0, 0, 0, .15);
     border-top:solid thin rgba(0, 0, 0, .15);
     border-bottom:solid thin rgba(0, 0, 0, .15);
+}
+/****************************signUp********************************************/
+form{
+    width:600px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+.contact label{
+    display:block;
+    text-align:left;
+    margin-left:75px;
+    padding:8px
+}
+fieldset{
+    border:none;
+}
+.border{
+    border-top:solid thin black;
+    padding:16px;
+}
+input{
+  padding:8px;
+  outline:none;
+}
+/***input boxes***/
+#txtPasswordTwo{
+    margin-left:10px;
+}
+#txtPassword{
+    margin-left:76px;
+}
+#txtUsername{
+    margin-left:73px;
+}
+#txtEmail{
+    margin-left:107px;
+}
+#txtFName{  
+    margin-left:68px;
+}
+#txtLName{  
+    margin-left:69px;
+}
+/***Submit btn***/
+#btnSubmit{
+  background-color:rgba(255,255,255,.5);
+  border:solid thick rgba(255,255,255,.5);
+  padding:10px;
+}
+#btnSubmit:hover{
+  opacity: 0.5;
+}
+input:hover,textarea:hover{
+  background: rgb(184, 236, 255);
+}
+.mistake{
+  color:red;
 }
