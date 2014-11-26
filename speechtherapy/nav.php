@@ -1,6 +1,7 @@
 <nav>
     <ol>
-        <li><a id='header' href='index.php'><img src="logo/logo.jpg"></a></li>
+        <li id="logo"><a  id='header' href='index.php'><img alt="logo" src="logo/transparent.png">
+                <strong>Speech</strong><span> Therapy</span></a></li>
         <?php
         if ($path_parts['filename'] == "index") {
             print '<li class="activePage">About</li>';
