@@ -1,5 +1,5 @@
 <?php
-include "top.php";
+include "bin/top.php";
 /* the purpose of this page is to display a form to allow a person to register
  * the form will be sticky meaning if there is a mistake the data previously 
  * entered will be displayed again. Once a form is submitted (to this same page)
@@ -60,12 +60,12 @@ $yourURL = $domain . $phpSelf;
 //
 // Initialize variables one for each form element
 // in the order they appear on the form
-$email = "";
-$username = "";
-$password = "";
-$passwordTwo = "";
-$fName = "";
-$lName = "";
+$email = "nagel@uvm.edu";
+$username = "nagel";
+$password = "nagel";
+$passwordTwo = "nagel";
+$fName = "nagel";
+$lName = "nagel";
 $match = false;
 $bingo = true;
 $both = false;
@@ -129,7 +129,7 @@ if (isset($_POST["btnSubmit"])) {
     $both = htmlentities($_POST["chkBoth"], ENT_QUOTES, "UTF-8");
     $gender = htmlentities($_POST["radGender"], ENT_QUOTES, "UTF-8");
     $grade = htmlentities($_POST["lstGrade"], ENT_QUOTES, "UTF-8");
-
+    $crypt = (string) crypt($username);
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // SECTION: 2c Validation
@@ -141,7 +141,23 @@ if (isset($_POST["btnSubmit"])) {
 // will be in the order they appear. errorMsg will be displayed on the form
 // see section 3b. The error flag ($emailERROR) will be used in section 3c.
 
+    $query = "select pmkUsername from tblUser where pmkUsername='" . $username . "'";
+    if ($thisDatabase->select($query)) {
+        $usernameERROR = true;
+        $errorMsg[] = "An account with this username already exists";
+    }
+    $query = "select pmkUsername from tblUser where fldEmail='" . $email . "'";
+    if ($thisDatabase->select($query)) {
+        $emailERROR = true;
+        $errorMsg[] = "An account with email already exists";
+    }
 
+    if ($debug) {
+        print "<p>Query: " . $query;
+        print "<p><pre>";
+        print_r($results);
+        print "</pre></p>";
+    }
     if ($username == "") {
         $errorMsg[] = "Please enter last name";
         $usernameERROR = true;
@@ -159,6 +175,7 @@ if (isset($_POST["btnSubmit"])) {
     if ($passwordTwo != $password) {
         $errorMsg[] = "Passwords don't match. Please enter a valid password";
         $passwordTwoERROR = true;
+        $passwordERROR = true;
     }
     if ($fName == "") {
         $errorMsg[] = "Please enter first name";
@@ -222,8 +239,9 @@ if (isset($_POST["btnSubmit"])) {
         $dataEntered = false;
         try {
             $thisDatabase->db->beginTransaction();
-            $query = 'INSERT INTO tblRegister SET fldEmail = ?, fldUserName = ?';
-            $data = array($email, $userName);
+            $query = 'INSERT INTO tblUser SET fldPassword = ?, pmkUsername = ?, '
+                    . 'fldFName = ?, fldLName = ?, fldEmail = ?, fldCrypt = ?';
+            $data = array($password, $username, $fName, $lName, $email, $crypt);
             if ($debug) {
                 print "<p>sql " . $query;
                 print"<p><pre>";
@@ -254,13 +272,13 @@ if (isset($_POST["btnSubmit"])) {
             //#################################################################
             // create a key value for confirmation
 
-            $query = "SELECT fldDateJoined FROM tblRegister WHERE pmkRegisterId=" . $primaryKey;
+            $query = "SELECT fldDateJoined FROM tblUser WHERE fldCrypt=" . $crypt;
             $results = $thisDatabase->select($query);
 
             $dateSubmitted = $results[0]["fldDateJoined"];
 
             $key1 = sha1($dateSubmitted);
-            $key2 = $primaryKey;
+            $key2 = $crypt;
 
             if ($debug)
                 print "<p>key 1: " . $key1;
@@ -364,9 +382,9 @@ if (isset($_POST["btnSubmit"])) {
                 <legend>Sign up</legend>
                 <fieldset class="wrapperTwo">
                     <fieldset class="contact">
-                        <legend>Contact Information</legend>
+                        <legend>Contact Information<strong class="required">*</strong></legend>
                         <div class="border">
-                            <label for="txtUsername" class="required">Username<strong class="mistake">*</strong>
+                            <label for="txtUsername">Username<strong class="required">*</strong>
                                 <input type="text" id="txtUsername" name="txtUsername"
                                        value="<?php print $username; ?>"
                                        maxlength="45" placeholder="Enter a valid username address"
@@ -374,7 +392,7 @@ if (isset($_POST["btnSubmit"])) {
                                        onfocus="this.select()" 
                                        autofocus>
                             </label>
-                            <label for="txtPassword" class="required">Password<strong class="mistake">*</strong>
+                            <label for="txtPassword" =>Password<strong class="required">*</strong>
                                 <input type="password" id="txtPassword" name="txtPassword"
                                        value="<?php print $password; ?>"
                                        maxlength="45" placeholder="Enter a valid username address"
@@ -382,14 +400,15 @@ if (isset($_POST["btnSubmit"])) {
                                        onfocus="this.select()" 
                                        autofocus>
                             </label>
-                            <label for="txtPasswordTwo" class="required">Re-enter Password<strong class="mistake">*</strong>
+                            <label for="txtPasswordTwo" >Re-enter Password<strong class="required">*</strong>
                                 <input type="password" id="txtPasswordTwo" name="txtPasswordTwo"
                                        value="<?php print $passwordTwo; ?>"
                                        maxlength="45" placeholder="RE-Enter a valid password "
+                                       <?php if ($passwordERROR) print 'class="mistake"'; ?>
                                        onfocus="this.select()" 
                                        autofocus>
                             </label>
-                            <label for="txtEmail" class="required">Email<strong class="mistake">*</strong>
+                            <label for="txtEmail" >Email<strong class="required">*</strong>
                                 <input type="text" id="txtEmail" name="txtEmail"
                                        value="<?php print $email; ?>"
                                        maxlength="45" placeholder="Enter a valid email address"
@@ -397,7 +416,7 @@ if (isset($_POST["btnSubmit"])) {
                                        onfocus="this.select()" 
                                        autofocus>
                             </label>
-                            <label for="txtFName" class="required">First Name<strong class="mistake">*</strong>
+                            <label for="txtFName" >First Name<strong class="required">*</strong>
                                 <input type="text" id="txtFName" name="txtFName"
                                        value="<?php print $fName; ?>"
                                        maxlength="45" placeholder="Enter a valid First name"
@@ -405,7 +424,7 @@ if (isset($_POST["btnSubmit"])) {
                                        onfocus="this.select()" 
                                        autofocus>
                             </label>
-                            <label for="txtLName" class="required">Last Name<strong class="mistake">*</strong>
+                            <label for="txtLName">Last Name<strong class="required">*</strong>
                                 <input type="text" id="txtLName" name="txtLName"
                                        value="<?php print $lName; ?>"
                                        maxlength="45" placeholder="Enter a valid Last name"
@@ -416,7 +435,7 @@ if (isset($_POST["btnSubmit"])) {
                         </div>
                     </fieldset> <!-- ends contact -->
                     <fieldset>
-                        <legend>Grade<strong class="mistake">*</strong></legend>
+                        <legend>Grade<strong class="required">*</strong></legend>
                         <div class="border">
                             <label for="lstGrade" >
                                 <select <?php if ($gradeERROR) print 'class="mistake"'; ?>
@@ -475,5 +494,5 @@ if (isset($_POST["btnSubmit"])) {
 <?php
 if ($debug)
     print "<p>END OF PROCESSING</p>";
-include "footer.php";
+include "bin/footer.php";
 ?>
