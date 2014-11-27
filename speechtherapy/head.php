@@ -13,4 +13,6 @@
               The site is designed using CSS and graphical design.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css" type="text/css" media="screen">
+        <link rel="shortcut icon" href="logo/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="logo/favicon.ico" type="image/x-icon">
 </head>
