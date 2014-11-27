@@ -78,12 +78,19 @@ form{
     width:600px;
     margin-left:auto;
     margin-right:auto;
-    text-align:center;
+    border:solid thin rgba(0,0,0,.1)
+}
+form h1{
+  text-align:center;
+  font-size:40px;
+  padding:0px;
+}
+legend {
+  font-size:20px;
 }
 .contact label{
     display:block;
     text-align:left;
-    margin-left:75px;
     padding:8px
 }
 fieldset{
@@ -97,12 +104,15 @@ input{
   padding:8px;
   outline:none;
 }
+input:hover,textarea:hover{
+  background: rgb(184, 236, 255);
+}
 /***input boxes***/
 #txtPasswordTwo{
     margin-left:10px;
 }
 #txtPassword{
-    margin-left:76px;
+    margin-left:77px;
 }
 #txtUsername{
     margin-left:73px;
@@ -111,7 +121,7 @@ input{
     margin-left:107px;
 }
 #txtFName{  
-    margin-left:68px;
+    margin-left:69px;
 }
 #txtLName{  
     margin-left:69px;
@@ -125,9 +135,11 @@ input{
 #btnSubmit:hover{
   opacity: 0.5;
 }
-input:hover,textarea:hover{
-  background: rgb(184, 236, 255);
+/***invalid data entered***/
+.required{
+  color:red;
 }
 .mistake{
-  color:red;
+    border: solid thin red;
+    background-color: rgba(215, 44, 44, 0.6);
 }
