@@ -18,14 +18,14 @@
         } else {
             print '<li><a href="bingo.php">Bingo</a></li>';
         }
-        if ($path_parts['filename'] == "students") {
-                print '<li class="activePage">Students</li>';
-            } else {
-                print '<li><a href="students.php">Students</a></li>';
-            }
         if ($loggedIn) {
             print "<li>" . $user . "</li>\n";
             print '<li><A HREF="javascript:history.go(0)">Log Out</A></li>';
+            if ($path_parts['filename'] == "Homework") {
+                print '<li class="activePage">Homework</li>';
+            } else {
+                print '<li><a href="homework.php">Homework</a></li>';
+            }
         } else {
             if ($path_parts['filename'] == "logIn") {
                 print '<li class="activePage">Log In</li>';
@@ -44,6 +44,11 @@
                 print '<li class="activePage">Update</li>';
             } else {
                 print '<li><a href="update.php">Update</a></li>';
+            }
+            if ($path_parts['filename'] == "students") {
+                print '<li class="activePage">Students</li>';
+            } else {
+                print '<li><a href="students.php">Students</a></li>';
             }
         }
         ?>
