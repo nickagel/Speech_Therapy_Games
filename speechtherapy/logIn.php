@@ -7,6 +7,8 @@ $password = "";
 
 $usernameERROR = false;
 $passwordERROR = false;
+$confirmERROR = false;
+$approveERROR = false;
 
 $errorMsg = array();
 
@@ -19,8 +21,8 @@ if (isset($_POST["btnSubmit"])) {
     }
     $username = htmlentities($_POST["txtUsername"], ENT_QUOTES, "UTF-8");
     $password = htmlentities($_POST["txtPassword"], ENT_QUOTES, "UTF-8");
-    
-    if ($username!="") {
+
+    if ($username != "") {
         $query = "select pmkUsername from tblUser where pmkUsername='" . $username . "'";
         if (!($thisDatabase->select($query))) {
             $usernameERROR = true;
@@ -41,12 +43,29 @@ if (isset($_POST["btnSubmit"])) {
         $usernameERROR = true;
         $errorMsg[] = "please enter a username";
     }
+
     if (!$passwordERROR and ! $usernameERROR) {
-        $query = "select pmkUsername, fldPassword from tblUser where fldPassword='" . $password . "' and pmkUsername='".$username."'";
+        $query = "select pmkUsername, fldPassword from tblUser where fldPassword='" . $password . "' and pmkUsername='" . $username . "'";
         if (!($thisDatabase->select($query))) {
             $usernameERROR = true;
             $passwordERROR = true;
             $errorMsg[] = "The given password and username do not match";
+        } else {
+            $fail = false;
+        }
+        if (!$fail) {
+            $query = "select pmkUsername, fldconfirmed from tblUser where fldConfirmed='1' and pmkUsername='" . $username . "'";
+            if (!($thisDatabase->select($query))) {
+                $confirmERROR = true;
+                $errorMsg[] = "You have not confirmed your account through your email.";
+            }
+            if (!$confirmERROR) {
+                $query = "select pmkUsername, fldApproved from tblUser where fldApproved='1' and pmkUsername='" . $username . "'";
+                if (!($thisDatabase->select($query))) {
+                    $approveERROR = true;
+                    $errorMsg[] = "The this account has not been approved by the admin please check back within 24 hours";
+                }
+            }
         }
     }
 }
@@ -55,9 +74,8 @@ if (isset($_POST["btnSubmit"])) {
 
 if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) {
     $_SESSION["logStatus"] = true;
-    $_SESSION["user"]=$username;
-    header ("Location: success.php");
-    
+    $_SESSION["user"] = $username;
+    header("Location: success.php");
 } else {
     foreach ($errorMsg as $message) {
         echo $message;
