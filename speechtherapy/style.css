@@ -76,7 +76,7 @@ footer{
     border-top:solid thin rgba(0, 0, 0, .15);
     border-bottom:solid thin rgba(0, 0, 0, .15);
 }
-/****************************signUp********************************************/
+/****************************signUp/LogIn**************************************/
 form{
     width:600px;
     margin-left:auto;
@@ -119,6 +119,9 @@ input:hover,textarea:hover{
 }
 #txtUsername{
     margin-left:73px;
+}
+.logIn #txtUsername{
+    margin-left:74px;
 }
 #txtEmail{
     margin-left:107px;
