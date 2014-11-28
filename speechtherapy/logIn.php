@@ -54,7 +54,10 @@ if (isset($_POST["btnSubmit"])) {
 
 
 if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) {
-    echo "Login successful";
+    $_SESSION["logStatus"] = true;
+    $_SESSION["user"]=$username;
+    header ("Location: success.php");
+    
 } else {
     foreach ($errorMsg as $message) {
         echo $message;
@@ -63,8 +66,8 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) {
     <form action="<?php print $phpSelf; ?>"
           method="post"
           id="frmRegister">
-        <fieldset class="wrapper">
-
+        <fieldset class="contact">
+            <h1>Log in</h1>
             <label  for="txtUsername">Username
                 <input type="text" id="txtUsername" name="txtUsername"
                        value="<?php print $username; ?>"
@@ -84,7 +87,7 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) {
         </fieldset>
         <fieldset class="buttons">
             <legend></legend>
-            <input type="submit" id="btnSubmit" name="btnSubmit" value="Sign up" tabindex="900" class="button">
+            <input type="submit" id="btnSubmit" name="btnSubmit" value="Log In" tabindex="900" class="button">
         </fieldset>
     </form>
     <?php

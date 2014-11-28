@@ -18,14 +18,14 @@
         } else {
             print '<li><a href="bingo.php">Bingo</a></li>';
         }
-        if ($loggedIn) {
-            print "<li>" . $user . "</li>\n";
-            print '<li><A HREF="javascript:history.go(0)">Log Out</A></li>';
+        if (!empty($_SESSION['logStatus']) and $_SESSION["logStatus"]) {
             if ($path_parts['filename'] == "Homework") {
                 print '<li class="activePage">Homework</li>';
             } else {
                 print '<li><a href="homework.php">Homework</a></li>';
             }
+            print "<li>USER: " . $_SESSION['user'] . "</li>\n";
+            print '<li><a href="logIn.php">Log out</a></li>';
         } else {
             if ($path_parts['filename'] == "logIn") {
                 print '<li class="activePage">Log In</li>';

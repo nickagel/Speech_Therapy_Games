@@ -3,8 +3,6 @@
 <html lang="en">
     <?php
     $adminStatus = false;
-    $loggedIn = false;
-    $user = "username";
     include ('head.php');
     $debug = false;
 
@@ -48,9 +46,13 @@
         include "lib/validation-functions.php";
         include "lib/mail-message.php";
     }
+    //if this page is loaded it unsets any session variable and sets log in as false
+    if ($path_parts['filename']=='logIn'){
+        session_unset();
+        $logOutMessage="Log out Successful!";
+    }
     ?>	
     <!-- ################ body section ######################### -->
-
     <?php
     require_once('bin/myDatabase.php');
     $dbUserName = get_current_user() . '_writer';
