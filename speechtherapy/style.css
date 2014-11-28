@@ -45,6 +45,9 @@ nav a:link, nav a:visited{
 nav li:nth-child(n+2):hover{
     background-color:rgba(0, 0, 0, .15);
 }
+nav li#none:hover{
+    background-color:rgba(0,0,0,0);
+}
 #logo a{
   margin-left:-54px;
   background-color:rgba(0, 0, 0, .1);
