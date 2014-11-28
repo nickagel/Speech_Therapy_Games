@@ -4,9 +4,7 @@
     <?php
     $adminStatus = false;
     $loggedIn = false;
-    $user="username";
-    
-    
+    $user = "username";
     include ('head.php');
     $debug = false;
 
@@ -46,7 +44,7 @@
 
     require_once('lib/security.php');
 
-    if ($path_parts['filename'] == "signUp" or $path_parts['filename'] == "confirmation" or $path_parts['filename'] == "approve") {
+    if ($path_parts['filename'] == "signUp" or $path_parts['filename'] == "confirmation" or $path_parts['filename'] == "approve" or $path_parts['filename'] == "logIn") {
         include "lib/validation-functions.php";
         include "lib/mail-message.php";
     }
@@ -54,13 +52,20 @@
     <!-- ################ body section ######################### -->
 
     <?php
-    print '<body class="' . $path_parts['filename'] . '">';
     require_once('bin/myDatabase.php');
     $dbUserName = get_current_user() . '_writer';
     $whichPass = "w"; //flag for which one to use.
     $dbName = strtoupper(get_current_user()) . '_speech';
     $thisDatabase = new myDatabase($dbUserName, $whichPass, $dbName);
-    
+    if ($path_parts['filename'] == 'match') {
+        try {
+            require_once('bin/array.php');
+            require_once('bin/matchGame.php');
+        } catch (Exception $ex) {
+            echo "error with game loading please contact admin";
+        }
+    }
+    print '<body class="' . $path_parts['filename'] . '">';
     include "nav.php";
     print '<section class="content">';
     ?>
