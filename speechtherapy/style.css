@@ -149,3 +149,17 @@ input:hover,textarea:hover{
     border: solid thin red;
     background-color: rgba(215, 44, 44, 0.6);
 }
+/**************************************Memory Board****************************/
+table{
+	margin: 0 auto;
+}
+.matchImg{
+	width:150px;
+	height:150px;
+}
+td {
+	width:150px;
+	height:150px;
+	border:solid thin black;
+	cursor:pointer;
+}
